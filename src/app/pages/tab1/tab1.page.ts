@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
-import { NewsResponse } from '../../interfaces/index';
+import { Article } from '../../interfaces/index';
+
 
 @Component({
   selector: 'app-tab1',
@@ -8,6 +9,9 @@ import { NewsResponse } from '../../interfaces/index';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
+
+  //Variable para almacenar los articulos, inicializado como arreglo vacio
+  public articles: Article[] = [];
 
   //inyectamos nuestro servicio de noticias (ns)
   constructor(private ns: NewsService) { }
@@ -17,7 +21,9 @@ export class Tab1Page implements OnInit {
     this.ns.getTopHeadLines()
       .subscribe({
         next: articulos => {
-          console.log(articulos);
+
+          //Desestructuramos los articulos y los insertamos en nuestra variable local
+          this.articles.push(...articulos)
         }
       });
   }
