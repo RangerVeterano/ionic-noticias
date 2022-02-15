@@ -76,10 +76,12 @@ export class ArticleComponent {
       handler: () => this.onSharedArticle()
     }
 
+    btnNormales.unshift(share)
+
     //comprobamos que la aplicacion esté corriendo en capacitor
     if (this.platform.is('capacitor') || this.platform.is('android')) {
       //de ser asi insertamos la opcion de compartir en redes sociales
-      btnNormales.unshift(share)
+      
     }
 
     const actionSheet = await this.as.create({
@@ -102,28 +104,32 @@ export class ArticleComponent {
     //desestructuramos el elemento
     const { title, source, url } = this.article
 
-    navigator.share({
-      title: title,
-      text: this.article.description,
-      url: url
 
-    }).then(() => console.log('Compartido con exito'))
-      .catch(() => console.log('Pues no se ha podido compartir con exito'))
 
-    // if (this.platform.is('capacitor') || this.platform.is('android')) {
+    if (this.platform.is('capacitor')) {
 
-    //   //llamamos nuestro servicio para mostrar el mensaje 
-    //   this.ss.share(
-    //     title,
-    //     source.name,
-    //     null,
-    //     url
-    //   )
-    // } else {
-    //   if (navigator.share) {
-        
-    //   }
-    // }
+      console.log('movil');
+
+      //llamamos nuestro servicio para mostrar el mensaje 
+      this.ss.share(
+        title,
+        source.name,
+        null,
+        url
+      )
+    } else {
+      if (navigator.share) {
+
+        console.log('pwa');
+        navigator.share({
+          title: title,
+          text: this.article.description,
+          url: url
+
+        }).then(() => console.log('Compartido con exito'))
+          .catch(() => console.log('Pues no se ha podido compartir con exito'))
+      }
+    }
 
 
   }
