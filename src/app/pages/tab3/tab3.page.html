@@ -1,13 +1,18 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Favoritos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+
+
+  <app-articles [articles]="articles"></app-articles>
+
+
+  <!-- <app-explore-container name="Tab 3 page"></app-explore-container> -->
+
 </ion-content>
