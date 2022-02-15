@@ -1,0 +1,6 @@
+//Borramos la barra de scroll de la parte de las categorias
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}

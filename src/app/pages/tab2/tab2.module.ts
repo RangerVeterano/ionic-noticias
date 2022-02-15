@@ -1,5 +1,4 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,13 +7,16 @@ import { ExploreContainerComponentModule } from '../../explore-container/explore
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab2PageRoutingModule
+    Tab2PageRoutingModule,
+    ComponentsModule //importamos nuestro modulo de componentes
   ],
   declarations: [Tab2Page]
 })
