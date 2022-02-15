@@ -39,7 +39,8 @@ export class Tab2Page implements OnInit {
     this.getNewsByCategory(this.selectedCategory);
   }
 
-  getNewsByCategory(category: string) {
+  //Metodo que se encarga de realizar la peticion de categorias
+  private getNewsByCategory(category: string) {
     this.ns.getTopHeadLinesByCategory(category)
       .subscribe({
         next: resp => {
@@ -70,7 +71,7 @@ export class Tab2Page implements OnInit {
           }, 1000);
 
         }
-      })
+      });
   }
 
 }
