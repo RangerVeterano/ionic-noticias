@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { storedArticlesByCategory } from '../data/mock-news';
 import { NewsResponse, Article, ArticlesByCategoryAndPage } from '../interfaces/index';
+
+
 
 
 //constante con la api key de noticias
@@ -20,7 +23,8 @@ export class NewsService {
 
   // Indicamos nuestra variable local que se encarga de guardar las peticiones ya realizadas
   // Además de poder ser flexible para en el caso de crear una nueva categoria no tener que modificar nada del código
-  private articlesByCategoryAndPage: ArticlesByCategoryAndPage = {}
+  //UPDATE en vez de tener el objeto vacio lo llenamos con data local
+  private articlesByCategoryAndPage: ArticlesByCategoryAndPage = storedArticlesByCategory
 
   //inyectamos servicio para realizar peticiones http
   constructor(private http: HttpClient) { }
@@ -32,6 +36,9 @@ export class NewsService {
   }
 
   getTopHeadLinesByCategory(category: string, loadMore: boolean = false): Observable<Article[]> {
+
+    //Como no podemos hacer peticiones tenemos que devolver el objeto directo
+    return of(this.articlesByCategoryAndPage[category].articles);
 
     //para el caso de que se quieran cargar más artículos
     if (loadMore) {

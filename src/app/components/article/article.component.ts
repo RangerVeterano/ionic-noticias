@@ -59,8 +59,8 @@ export class ArticleComponent {
     //Creamos los botones que va a tener nuestro action sheet
     const btnNormales: ActionSheetButton[] = [
       {
-        text: articleInFavorites? 'Quitar de Favoritos': 'Favorito',
-        icon: articleInFavorites? 'heart' : 'heart-outline',
+        text: articleInFavorites ? 'Quitar de Favoritos' : 'Favorito',
+        icon: articleInFavorites ? 'heart' : 'heart-outline',
         handler: () => this.onToggleFavorite()
       },
       {
@@ -77,7 +77,7 @@ export class ArticleComponent {
     }
 
     //comprobamos que la aplicacion esté corriendo en capacitor
-    if (this.platform.is('capacitor')) {
+    if (this.platform.is('capacitor') || this.platform.is('android')) {
       //de ser asi insertamos la opcion de compartir en redes sociales
       btnNormales.unshift(share)
     }
@@ -102,12 +102,29 @@ export class ArticleComponent {
     //desestructuramos el elemento
     const { title, source, url } = this.article
 
-    this.ss.share(
-      title,
-      source.name,
-      null,
-      url
-    )
+    navigator.share({
+      title: title,
+      text: this.article.description,
+      url: url
+
+    }).then(() => console.log('Compartido con exito'))
+      .catch(() => console.log('Pues no se ha podido compartir con exito'))
+
+    // if (this.platform.is('capacitor') || this.platform.is('android')) {
+
+    //   //llamamos nuestro servicio para mostrar el mensaje 
+    //   this.ss.share(
+    //     title,
+    //     source.name,
+    //     null,
+    //     url
+    //   )
+    // } else {
+    //   if (navigator.share) {
+        
+    //   }
+    // }
+
 
   }
 
@@ -122,7 +139,5 @@ export class ArticleComponent {
     //otra forma 
     await Browser.open({ url: this.article.url });
   }
-
-
 
 }

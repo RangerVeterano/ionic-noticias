@@ -15,6 +15,8 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 //almacenamiento nativo de ionic
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +26,12 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule, //Modulo de angular para peticiones http
-    IonicStorageModule.forRoot() //modulo de ionic para las guardar datos localmente
+    IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', {
+  enabled: environment.production,
+  // Register the ServiceWorker as soon as the app is stable
+  // or after 30 seconds (whichever comes first).
+  registrationStrategy: 'registerWhenStable:30000'
+}) //modulo de ionic para las guardar datos localmente
   ],
   providers: [
     {
