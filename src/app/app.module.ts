@@ -12,6 +12,9 @@ import { AppComponent } from './app.component';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 //Compartir en redes sociales
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+//Mensajes toasts
+import { Toast } from '@awesome-cordova-plugins/toast/ngx';
+
 
 //almacenamiento nativo de ionic
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -40,6 +43,7 @@ import { environment } from '../environments/environment';
     },
     InAppBrowser,
     SocialSharing,
+    Toast
   ],
   bootstrap: [AppComponent],
 })

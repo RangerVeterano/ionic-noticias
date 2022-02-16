@@ -9,6 +9,8 @@ import { ActionSheetButton, ActionSheetController, Platform } from '@ionic/angul
 import { Browser } from '@capacitor/browser';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { StorageService } from '../../services/storage.service';
+import { Toast } from '@awesome-cordova-plugins/toast/ngx'; //toasts nativos
+import { ToastController } from '@ionic/angular'; //toast maquetados
 
 
 @Component({
@@ -30,7 +32,9 @@ export class ArticleComponent {
     private platform: Platform,
     private as: ActionSheetController,
     private ss: SocialSharing,
-    private storageService: StorageService) { }
+    private storageService: StorageService,
+    private toast: Toast,
+    public toastController: ToastController) { }
 
   openArticle() {
 
@@ -101,10 +105,17 @@ export class ArticleComponent {
   //metodo para cuando se hace click en compartir
   onSharedArticle() {
 
+    
+    const plataforma = this.platform.platforms().join(' '); 
+    console.log(plataforma);
+
+    this.presentToast(plataforma);
+
+    this.toast.show(plataforma,'20000','center')
+    .subscribe()
+
     //desestructuramos el elemento
     const { title, source, url } = this.article
-
-
 
     if (this.platform.is('capacitor')) {
 
@@ -144,6 +155,14 @@ export class ArticleComponent {
   async abrirArticuloConNavegador() {
     //otra forma 
     await Browser.open({ url: this.article.url });
+  }
+
+  async presentToast(msg:string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 10000
+    });
+    toast.present();
   }
 
 }
